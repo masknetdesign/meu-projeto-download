@@ -1,0 +1,14 @@
+{
+    "name": "meu-projeto-download",
+    "version": "1.0.0",
+    "main": "api/download.js",
+    "scripts": {
+      "start": "node api/download.js"
+    },
+    "dependencies": {
+      "express": "^4.17.1",
+      "cors": "^2.8.5",
+      "yt-dlp-exec": "^2.0.1"
+    }
+  }
+  
