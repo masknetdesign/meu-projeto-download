@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const ytdlp = require('yt-dlp-exec').default;
+const ytdl = require('ytdl-core');
 const path = require('path');
 
 const app = express();
@@ -14,10 +14,10 @@ app.get('/api/download', async (req, res) => {
     }
 
     try {
-        res.header('Content-Disposition', 'attachment; filename="video.mp4"');
-        ytdlp(url, {
-            format: 'mp4'
-        }).pipe(res);
+        const info = await ytdl.getInfo(url);
+        const videoTitle = info.videoDetails.title.replace(/[^\w\s]/gi, ''); // Remove caracteres especiais do título do vídeo
+        res.header('Content-Disposition', `attachment; filename="${videoTitle}.mp4"`);
+        ytdl(url, { format: 'mp4' }).pipe(res);
     } catch (error) {
         console.error('Erro ao processar o download do vídeo:', error);
         res.status(500).send('Erro ao processar o download do vídeo');
