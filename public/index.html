@@ -20,7 +20,11 @@
             const url = document.getElementById('videoUrl').value;
             const response = await fetch(`/api/download?url=${encodeURIComponent(url)}`);
             if (response.ok) {
-                window.location.href = `/api/download?url=${encodeURIComponent(url)}`;
+                const blob = await response.blob();
+                const a = document.createElement('a');
+                a.href = window.URL.createObjectURL(blob);
+                a.download = "video.mp4";
+                a.click();
             } else {
                 document.getElementById('message').textContent = 'Erro ao processar o download do vídeo';
             }

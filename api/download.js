@@ -1,12 +1,10 @@
 const express = require('express');
 const cors = require('cors');
 const ytdl = require('ytdl-core');
-const path = require('path');
 
 const app = express();
 app.use(cors());
 
-// Rota para baixar o vídeo
 app.get('/api/download', async (req, res) => {
     const url = req.query.url;
     if (!url) {
@@ -24,10 +22,9 @@ app.get('/api/download', async (req, res) => {
     }
 });
 
-// Rota para servir o arquivo HTML
-app.use(express.static(path.join(__dirname, '../public')));
-
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
 });
+
+module.exports = app;
