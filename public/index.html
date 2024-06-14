@@ -7,10 +7,24 @@
 </head>
 <body>
     <h1>Baixar Vídeos</h1>
-    <form id="downloadForm" action="/api/download" method="get">
+    <form id="downloadForm">
         <label for="videoUrl">URL do Vídeo:</label>
-        <input type="text" id="videoUrl" name="url" required>
+        <input type="text" id="videoUrl" name="videoUrl" required>
         <button type="submit">Baixar</button>
     </form>
+    <div id="message"></div>
+
+    <script>
+        document.getElementById('downloadForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
+            const url = document.getElementById('videoUrl').value;
+            const response = await fetch(`/api/download?url=${encodeURIComponent(url)}`);
+            if (response.ok) {
+                window.location.href = `/api/download?url=${encodeURIComponent(url)}`;
+            } else {
+                document.getElementById('message').textContent = 'Erro ao processar o download do vídeo';
+            }
+        });
+    </script>
 </body>
 </html>
